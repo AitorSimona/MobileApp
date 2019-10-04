@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/messages"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/background_picture"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="The messages:"
+        android:textColor="@color/black"
+        android:textSize="28dp"/>
+
+
+    <ListView
+        android:id="@+id/conversation"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="4dp"/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dip"
+        android:background="@color/grey">
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@color/grey"
+            android:gravity="top"
+            android:hint="Type text here"
+            android:inputType="textCapSentences|textMultiLine"
+            android:paddingLeft="4dp"
+            android:paddingTop="10dp"
+            android:text=""
+            android:textColor="@color/orange"/>
+
+        <!-- without: android:inputType is multi-line by default (CR instead of DONE softkey)
+                      android:inputType="textCapSentences|textAutoCorrect"
+                      android:inputType="textNoSuggestions|textVisiblePassword"
+                      android:imeOptions="actionSend"            -->
+
+        <Button
+            android:id="@+id/mybutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="sendText"
+            android:text="Send"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+  
+
+
+
+

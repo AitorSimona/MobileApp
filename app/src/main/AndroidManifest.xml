@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="edu.upc.whatsapp"
+          android:versionCode="1"
+          android:versionName="1.0">
+    
+     <uses-sdk
+         android:targetSdkVersion="17"
+          android:maxSdkVersion="17" />
+          
+    <uses-permission android:name="android.permission.INTERNET" />   
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+          
+    <application android:name="._GlobalState"
+                 android:label="@string/app_name" 
+                 android:hardwareAccelerated="true" 
+                 android:theme="@android:style/Theme.Light">
+        
+        <activity android:name=".a_WelcomeActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name="b_LoginActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.Dialog"
+                  android:label="Login Form">
+        </activity>
+        <activity android:name="c_RegistrationActivity"
+                  android:screenOrientation="portrait"
+                  android:label="Sign up Form"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name="d_UsersListActivity"
+                  android:label="Users List">
+        </activity>
+        <activity android:name=".e_MessagesActivity_1"
+                  android:label="Messages"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".e_MessagesActivity_2_websocket"
+                  android:label="Messages"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".e_MessagesActivity_3_broadcast_receiver"
+                  android:label="Messages"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+        <activity android:name=".e_MessagesActivity_4_broadcast_and_persistence"
+                  android:label="Messages"
+                  android:windowSoftInputMode="stateHidden">
+        </activity>
+
+        <service android:name=".service.PushService" />
+                
+    </application>
+</manifest> 

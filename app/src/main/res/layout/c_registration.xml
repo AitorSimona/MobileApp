@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/background_picture">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/registration"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/RegistrationLoginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="30dip"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="Login:"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/EditRegistrationLoginEditText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:maxLines="1"
+            android:layout_marginTop="10dip"
+            android:focusable="true"
+            android:textSize="14dip"/>
+
+        <TextView
+            android:id="@+id/RegistrationPasswordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="10dip"
+            android:maxLines="1"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="Password:"
+            android:textSize="14dip"/>
+
+        <EditText
+            android:id="@+id/EditRegistrationPasswordEditText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="10dip"
+            android:maxLines="1"
+            android:focusable="true"
+            android:textSize="14dip"/>
+
+        <TextView
+            android:id="@+id/RegistrationNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="0dip"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="Name:"
+            android:textSize="14dip"/>
+
+        <EditText
+            android:id="@+id/EditRegistrationNameText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:maxLines="1"
+            android:layout_marginTop="10dip"
+            android:focusable="true"
+            android:textSize="14dip"/>
+
+        <TextView
+            android:id="@+id/RegistrationSurnameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="0dip"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="Surname:"
+            android:textSize="14dip"/>
+
+        <EditText
+            android:id="@+id/EditRegistrationSurnameText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:maxLines="1"
+            android:layout_marginTop="10dip"
+            android:focusable="true"
+            android:textSize="14dip"/>
+
+        <TextView
+            android:id="@+id/RegistrationmailText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:layout_marginTop="0dip"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="e-mail:"
+            android:textSize="14dip"/>
+
+        <EditText
+            android:id="@+id/EditRegistrationmailText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginStart="5dip"
+            android:maxLines="1"
+            android:layout_marginTop="10dip"
+            android:focusable="true"
+            android:textSize="14dip"/>
+
+        <Button
+            android:id="@+id/editregistrationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dip"
+            android:layout_marginBottom="10dip"
+            android:text="REGISTER"
+            android:textColor="@color/orange"/>
+
+    </LinearLayout>
+
+</ScrollView>

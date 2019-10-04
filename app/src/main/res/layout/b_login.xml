@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/login"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background_picture">
+
+
+        <TextView
+            android:id="@+id/PasswordText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_marginLeft="0dip"
+            android:layout_marginTop="0dip"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="Login:"
+            android:textSize="28sp"/>
+
+        <EditText
+            android:id="@+id/EditLoginLoginEditText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_alignLeft="@id/PasswordText"
+            android:layout_below="@id/PasswordText"
+            android:maxLines="1"
+            android:layout_marginTop="10dip"
+            android:focusable="true"
+            android:textSize="28sp"/>
+
+        <TextView
+            android:id="@+id/LoginText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_alignLeft="@id/PasswordText"
+            android:layout_marginTop="10dip"
+            android:layout_below="@id/EditLoginLoginEditText"
+            android:maxLines="1"
+            android:textColor="@color/orange"
+            android:focusable="true"
+            android:text="Password:"
+            android:textSize="28sp"/>
+
+        <EditText
+            android:id="@+id/EditLoginPasswordEditText"
+            android:layout_width="300dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dip"
+            android:layout_alignLeft="@id/PasswordText"
+            android:layout_marginTop="10dip"
+            android:layout_below="@id/LoginText"
+            android:maxLines="1"
+            android:focusable="true"
+            android:textSize="28sp"/>
+
+        <Button
+            android:id="@+id/editloginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/PasswordText"
+            android:layout_marginRight="10dip"
+            android:layout_below="@id/EditLoginPasswordEditText"
+            android:text="LOGIN"
+            android:textColor="@color/orange"/>
+
+
+</RelativeLayout>
+
