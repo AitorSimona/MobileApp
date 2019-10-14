@@ -36,8 +36,15 @@ public class MyAdapter_users extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
       if (convertView == null) {
-        convertView = LayoutInflater.from(context).inflate(R.layout.row_twotextviews, parent, false);
+          convertView = LayoutInflater.from(context).inflate(R.layout.row_twotextviews, parent, false);
       }
+      UserInfo user = users.get(position);
+
+      TextView nameview = (((TextView)convertView.findViewById(R.id.row_twotextviews_name)));
+      TextView surnameview = (((TextView)convertView.findViewById(R.id.row_twotextviews_surname)));
+
+      nameview.setText(user.getName());
+      surnameview.setText(user.getSurname());
 
       //...
 

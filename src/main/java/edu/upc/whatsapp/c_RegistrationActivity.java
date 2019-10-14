@@ -39,13 +39,13 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
 
       //...
       user = new User();
-      user.setLogin((findViewById(R.id.EditLoginLoginEditText).toString()));
-      user.setPassword((findViewById(R.id.EditLoginPasswordEditText).toString()));
-      user.setEmail((findViewById(R.id.EditLoginLoginEditText).toString()));
+      user.setLogin(((EditText)findViewById(R.id.EditRegistrationLoginEditText)).getText().toString());
+      user.setPassword(((EditText)findViewById(R.id.EditRegistrationPasswordEditText)).getText().toString());
+      user.setEmail(((EditText)findViewById(R.id.EditRegistrationmailText)).getText().toString());
 
       UserInfo user_info = new UserInfo();
-      user_info.setSurname((findViewById(R.id.RegistrationSurnameText).toString()));
-      user_info.setName((findViewById(R.id.RegistrationNameText).toString()));
+      user_info.setSurname(((EditText)findViewById(R.id.EditRegistrationSurnameText)).getText().toString());
+      user_info.setName(((EditText)findViewById(R.id.EditRegistrationNameText)).getText().toString());
 
       user.setUserInfo(user_info);
 
@@ -82,7 +82,7 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
       operationPerformer = null;
       progressDialog.dismiss();
 
-      UserInfo userInfo = (UserInfo) msg.getData().getSerializable("userInfo");
+      UserInfo userInfo = (UserInfo) msg.getData().getSerializable("operator_reply");
 
       if (userInfo.getId() >= 0) {
         toastShow("Registration successful");
@@ -90,9 +90,8 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
         //...
         globalState.my_user = userInfo;
         globalState.save_my_user();
-        startService(new Intent(c_RegistrationActivity.this, PushService.class));
-        startService(new Intent(c_RegistrationActivity.this, LocationManager.class));
-        //startActivity(new Intent(c_RegistrationActivity.this, d_WorkOrdersActivity_1.class));
+        //startService(new Intent(c_RegistrationActivity.this, PushService.class));
+        startActivity(new Intent(c_RegistrationActivity.this, d_UsersListActivity.class));
 
         finish();
       }

@@ -39,8 +39,8 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
 
         //...
         user = new User();
-        user.setLogin((findViewById(R.id.EditLoginLoginEditText).toString()));
-        user.setPassword((findViewById(R.id.EditLoginPasswordEditText).toString()));
+        user.setLogin(((EditText)findViewById(R.id.EditLoginLoginEditText)).getText().toString());
+        user.setPassword(((EditText)findViewById(R.id.EditLoginPasswordEditText)).getText().toString());
 
         progressDialog = ProgressDialog.show(this, "LoginActivity", "Logging into the server...");
         // if there's still a running thread doing something, we don't create a new one
@@ -74,7 +74,7 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
       operationPerformer = null;
       progressDialog.dismiss();
 
-      UserInfo userInfo = (UserInfo) msg.getData().getSerializable("userInfo");
+      UserInfo userInfo = (UserInfo) msg.getData().getSerializable("user_reply");
 
       if (userInfo.getId() >= 0) {
         toastShow("Login successful");
@@ -83,9 +83,8 @@ public class b_LoginActivity extends Activity implements View.OnClickListener {
 
         globalState.my_user = userInfo;
         globalState.save_my_user();
-        startService(new Intent(b_LoginActivity.this,PushService.class));
-        startService(new Intent(b_LoginActivity.this, LocationManager.class));
-        //startActivity(new Intent(b_LoginActivity.this, d_WorkOrdersActivity_1.class));
+        //startService(new Intent(b_LoginActivity.this,PushService.class));;
+        startActivity(new Intent(b_LoginActivity.this, d_UsersListActivity.class));
 
         finish();
       }

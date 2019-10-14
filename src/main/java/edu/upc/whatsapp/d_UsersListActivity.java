@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -32,6 +33,9 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
   public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
     //...
+    globalState.user_to_talk_to = adapter.users.get(position);
+    startActivity(new Intent(d_UsersListActivity.this, e_MessagesActivity_1.class));
+
 
   }
 
@@ -48,7 +52,8 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
 
       //...
       //remove this sentence on completing the code:
-      return null;
+
+      return RPC.allUserInfos();
 
     }
 
@@ -59,8 +64,15 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
         toastShow("There's been an error downloading the users");
       } else {
 
-        //...
+        users.remove(globalState.my_user);
 
+       adapter = new MyAdapter_users(d_UsersListActivity.this,users);
+
+       ListView listView = (((ListView)findViewById(R.id.listView)));
+
+       listView.setAdapter(adapter);
+
+        //...
       }
     }
   }
