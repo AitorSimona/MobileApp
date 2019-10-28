@@ -81,10 +81,9 @@ public class e_MessagesActivity_1 extends Activity {
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
 
-      //...
-
+      //... make call to server request all messages between you and other guy
       //remove this sentence on completing the code:
-      return null;
+      return RPC.retrieveMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId());
     }
 
     @Override
@@ -95,8 +94,11 @@ public class e_MessagesActivity_1 extends Activity {
       } else {
         toastShow(all_messages.size()+" messages downloaded");
 
-        //...
+        //... create adapter, pass messages to adapter, retrieve listview for layout pass adapter
+        MyAdapter_messages adapter_messages = new MyAdapter_messages(e_MessagesActivity_1.this,all_messages,globalState.my_user);
+        ListView listView = (((ListView)findViewById(R.id.conversation)));
 
+        listView.setAdapter(adapter_messages);
       }
     }
   }
@@ -127,7 +129,14 @@ public class e_MessagesActivity_1 extends Activity {
 
   public void sendText(final View view) {
 
-    //...
+    //... crear message i passar a send message task
+    Message message = new Message();
+
+    message.setContent(((EditText)findViewById(R.id.input)).getText().toString());
+    message.setDate(new Date());
+    message.setUserSender(globalState.my_user);
+    message.setUserReceiver(globalState.user_to_talk_to);
+    new SendMessage_Task().execute(message);
 
     input_text.setText("");
 
@@ -146,7 +155,7 @@ public class e_MessagesActivity_1 extends Activity {
     protected Boolean doInBackground(Message... messages) {
 
       //...
-
+      RPC.postMessage(messages[0]);
       //remove this sentence on completing the code:
       return false;
     }
@@ -156,7 +165,9 @@ public class e_MessagesActivity_1 extends Activity {
       if (resultOk) {
         toastShow("message sent");
 
+        fetchNewMessages_Task.execute();
         //...
+
 
       } else {
         toastShow("There's been an error sending the message");

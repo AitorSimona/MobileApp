@@ -81,8 +81,9 @@ public class MyAdapter_messages extends BaseAdapter {
       convertView.findViewById(R.id.row_date).setVisibility(View.GONE);
     ((TextView) convertView.findViewById(R.id.row_date)).setText(sdf.format(date));
 
-    //...
+    //... write content of the message into text view/ into row_content
 
+    ((TextView) convertView.findViewById(R.id.row_content)).setText(messages.get(position).getContent());
     ((TextView) convertView.findViewById(R.id.row_hour)).setText(sdf2.format(date));
 
     return convertView;
@@ -99,10 +100,14 @@ public class MyAdapter_messages extends BaseAdapter {
   @Override
   public int getItemViewType(int position) {
 
-    //...
-    //remove this sentence on completing the code:
-    return -1;
+    //... check if message in position is mine or not return 0 (mine) or 1 use global state my user user to talk to
 
+    UserInfo info = messages.get(position).getUserSender();
+
+    if(my_user == info)
+      return 0;
+    else
+      return 1;
   }
 
   @Override
