@@ -27,6 +27,10 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     globalState = (_GlobalState) getApplication();
     setContentView(R.layout.d_userslist);
     new DownloadUsers_Task().execute();
+
+    ListView listView = (((ListView)findViewById(R.id.listView)));
+
+    listView.setOnItemClickListener(d_UsersListActivity.this);
   }
 
   @Override
@@ -35,7 +39,6 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
     //...
     globalState.user_to_talk_to = adapter.users.get(position);
     startActivity(new Intent(d_UsersListActivity.this, e_MessagesActivity_1.class));
-
   }
 
   private class DownloadUsers_Task extends AsyncTask<Void, Void, List<UserInfo>> {

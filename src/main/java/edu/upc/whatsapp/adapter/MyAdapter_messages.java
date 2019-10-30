@@ -104,7 +104,7 @@ public class MyAdapter_messages extends BaseAdapter {
 
     UserInfo info = messages.get(position).getUserSender();
 
-    if(my_user == info)
+    if(my_user.getId() == info.getId())
       return 0;
     else
       return 1;

@@ -58,6 +58,9 @@ public class e_MessagesActivity_1 extends Activity {
   protected void onResume() {
     super.onResume();
 
+    timer = new Timer();
+    timer.scheduleAtFixedRate(new fetchNewMessagesTimerTask(),10000,10000);
+
     //...
 
   }
@@ -66,6 +69,7 @@ public class e_MessagesActivity_1 extends Activity {
   protected void onPause() {
     super.onPause();
 
+    timer.cancel();
     //...
 
   }
@@ -95,10 +99,10 @@ public class e_MessagesActivity_1 extends Activity {
         toastShow(all_messages.size()+" messages downloaded");
 
         //... create adapter, pass messages to adapter, retrieve listview for layout pass adapter
-        MyAdapter_messages adapter_messages = new MyAdapter_messages(e_MessagesActivity_1.this,all_messages,globalState.my_user);
-        ListView listView = (((ListView)findViewById(R.id.conversation)));
+        adapter = new MyAdapter_messages(e_MessagesActivity_1.this,all_messages,globalState.my_user);
+        conversation = (((ListView)findViewById(R.id.conversation)));
 
-        listView.setAdapter(adapter_messages);
+        conversation.setAdapter(adapter);
       }
     }
   }
@@ -108,10 +112,11 @@ public class e_MessagesActivity_1 extends Activity {
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
 
+      if(!adapter.isEmpty())
+        return RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId(),adapter.getLastMessage());
+      else
+        return RPC.retrieveMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId());
       //...
-
-      //remove this sentence on completing the code:
-      return null;
     }
 
     @Override
@@ -122,7 +127,7 @@ public class e_MessagesActivity_1 extends Activity {
         toastShow(new_messages.size()+" new message/s downloaded");
 
         //...
-
+        adapter.addMessages(new_messages);
       }
     }
   }
@@ -155,9 +160,7 @@ public class e_MessagesActivity_1 extends Activity {
     protected Boolean doInBackground(Message... messages) {
 
       //...
-      RPC.postMessage(messages[0]);
-      //remove this sentence on completing the code:
-      return false;
+      return RPC.postMessage(messages[0]);
     }
 
     @Override
@@ -165,7 +168,8 @@ public class e_MessagesActivity_1 extends Activity {
       if (resultOk) {
         toastShow("message sent");
 
-        fetchNewMessages_Task.execute();
+        new fetchNewMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
+
         //...
 
 
@@ -179,6 +183,8 @@ public class e_MessagesActivity_1 extends Activity {
 
     @Override
     public void run() {
+
+      new fetchNewMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
 
       //...
 
