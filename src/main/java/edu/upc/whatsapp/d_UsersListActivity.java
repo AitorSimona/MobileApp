@@ -38,7 +38,7 @@ public class d_UsersListActivity extends Activity implements ListView.OnItemClic
 
     //...
     globalState.user_to_talk_to = adapter.users.get(position);
-    startActivity(new Intent(d_UsersListActivity.this, e_MessagesActivity_1.class));
+    startActivity(new Intent(d_UsersListActivity.this, e_MessagesActivity_2_websocket.class));
   }
 
   private class DownloadUsers_Task extends AsyncTask<Void, Void, List<UserInfo>> {

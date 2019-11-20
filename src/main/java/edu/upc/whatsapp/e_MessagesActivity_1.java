@@ -103,6 +103,14 @@ public class e_MessagesActivity_1 extends Activity {
         conversation = (((ListView)findViewById(R.id.conversation)));
 
         conversation.setAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+        conversation.post(new Runnable() {
+          @Override
+          public void run() {
+            conversation.setSelection(conversation.getCount()- 1);
+          }
+        });
       }
     }
   }
@@ -125,16 +133,19 @@ public class e_MessagesActivity_1 extends Activity {
         toastShow("There's been an error downloading new messages");
       } else {
         toastShow(new_messages.size()+" new message/s downloaded");
-
-        //...
         adapter.addMessages(new_messages);
+        adapter.notifyDataSetChanged();
+        conversation.post(new Runnable() {
+          @Override
+          public void run() {
+            conversation.setSelection(conversation.getCount()- 1);
+          }
+        });
       }
     }
   }
 
   public void sendText(final View view) {
-
-    //... crear message i passar a send message task
     Message message = new Message();
 
     message.setContent(((EditText)findViewById(R.id.input)).getText().toString());
