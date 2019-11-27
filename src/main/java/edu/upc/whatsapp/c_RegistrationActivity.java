@@ -86,7 +86,7 @@ public class c_RegistrationActivity extends Activity implements View.OnClickList
 
       if (userInfo.getId() >= 0) {
         toastShow("Registration successful");
-
+        startService(new Intent(c_RegistrationActivity.this, PushService.class));
         //...
         globalState.my_user = userInfo;
         globalState.save_my_user();

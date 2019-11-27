@@ -49,7 +49,7 @@ public class e_MessagesActivity_3_broadcast_receiver extends Activity {
     setContentView(R.layout.e_messages);
     globalState = (_GlobalState) getApplication();
 
-    //para cuando venimos de la notificacion de status-bar:
+    //when we come from the status-bar notification, not from previous screen:
     Intent intent = getIntent();
     if(intent.getExtras()!=null && intent.getExtras().get("message")!=null){
 
