@@ -62,10 +62,9 @@ public class PushService extends Service {
   
   private class MyTimerTask extends TimerTask {
     public void run() {
-      //esto pasa cuando Android destruye/recrea el servicio
-      //de forma automatica, por ejemplo al parar la aplicacion con el
-      //servicio arrancado, entonces se intentaria abrir un WebSocket
-      //de nuevo sin un usuario identificado: login/password.
+      //this happens when Android destroys/recreates the service automatically,
+      // for example when stopping the app with the service already booted.
+      // Then, a webSocket is opened without an identified user.
       if(globalState.my_user==null){
         return;
       }
@@ -83,8 +82,7 @@ public class PushService extends Service {
     super.onStartCommand(intent, flag, startId);
 //    toastShow("PushService started");
 
-    //aqui no hay nada que hacer, ya lo hace todo el timer,
-    //salvo si el servicio ya estaba iniciado:
+// timer does everything here except if the service was already booted
     String json_my_user = gson.toJson(globalState.my_user);
     if(!json_userInfo_current_session.equals("") &&
        !json_userInfo_current_session.equals(json_my_user)){
@@ -158,7 +156,17 @@ public class PushService extends Service {
     public void onOpen(Session session, EndpointConfig EndpointConfig) {
       try {
 
-        //...
+        PushService.this.session = session;
+        connectedToServer = true;
+        String json_message = gson.toJson(globalState.my_user);
+        session.getBasicRemote().sendText(json_message);
+
+        session.addMessageHandler(new MessageHandler.Whole<String>() {
+          @Override
+          public void onMessage(String message) {
+            sendMessageToHandler("message" , message);
+          }
+        });
 
       }
       catch (Exception e) {
@@ -201,6 +209,14 @@ public class PushService extends Service {
       String content = msg.getData().getCharSequence("content").toString();
       if(type.equals("message")){
 
+        if(globalState.MessagesActivity_visible)
+        {
+
+        }
+        else
+        {
+
+        }
         //...
 
       }
