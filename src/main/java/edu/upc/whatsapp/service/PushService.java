@@ -208,14 +208,20 @@ public class PushService extends Service {
       String type = msg.getData().getCharSequence("type").toString();
       String content = msg.getData().getCharSequence("content").toString();
       if(type.equals("message")){
+        Message message = gson.fromJson(content, Message.class);
 
         if(globalState.MessagesActivity_visible)
         {
+          Intent intent = new Intent();
+          intent.setAction("edu.upc.whatsapp.newMessage");
 
+          intent.putExtra("message",content);
+
+          sendBroadcast(intent);
         }
         else
         {
-
+          sendPushNotification(PushService.this,message.getContent(),content);
         }
         //...
 
@@ -230,8 +236,8 @@ public class PushService extends Service {
 
     Intent mIntent = new Intent(context, e_MessagesActivity_3_broadcast_receiver.class);
     mIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    //con esto MessagesActivity obtiene con quien estoy hablando
-    //al entrar en dicha pantalla:
+    //with this Messages activity knows who we are talking to
+    //on entering the screen:
     mIntent.putExtra("message", json_msg);
     PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -243,7 +249,7 @@ public class PushService extends Service {
       .setContentInfo("1")
       .setSmallIcon(R.drawable.app_logo)
       .setAutoCancel(true);
-    
+
     Notification notification = mBuilder.build();
     notification.defaults |= Notification.DEFAULT_SOUND;
     
