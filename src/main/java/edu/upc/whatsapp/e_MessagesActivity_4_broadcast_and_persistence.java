@@ -52,12 +52,15 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
     setContentView(R.layout.e_messages);
     globalState = (_GlobalState) getApplication();
 
-    //para cuando venimos de la notificacion de status-bar:
+    //when we come from the status-bar notification, not from previous screen:
     Intent intent = getIntent();
     if(intent.getExtras()!=null && intent.getExtras().get("message")!=null){
 
       //...
+      String message = intent.getExtras().get("message").toString();
+      Message mess = gson.fromJson(message, Message.class);
 
+      globalState.user_to_talk_to = mess.getUserSender();
     }
 
     TextView title = (TextView) findViewById(R.id.title);
@@ -68,7 +71,25 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
       @Override
       public void onReceive(Context arg0, Intent arg1) {
 
+        String message = arg1.getExtras().get("message").toString();
+        Message mess = gson.fromJson(message, Message.class);
         //...
+        if(mess.getUserSender().getId() == globalState.user_to_talk_to.getId())
+        {
+          adapter.addMessage(mess);
+          adapter.notifyDataSetChanged();
+
+          conversation.post(new Runnable() {
+            @Override
+            public void run() {
+              conversation.setSelection(conversation.getCount()- 1);
+            }
+          });
+        }
+        else
+        {
+          toastShow(mess.getUserSender().getName() + ":" + mess.getContent());
+        }
 
       }
     };
@@ -76,21 +97,17 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
     registerReceiver(broadcastReceiver, intentFilter);
 
     if(globalState.isThere_messages()) {
-
-      //...
-
+      globalState.load_messages();
     }
     else{
-
-      //...
-
+      new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
     }
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-
+    globalState.MessagesActivity_visible = true;
     //...
 
   }
@@ -98,7 +115,7 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
   @Override
   protected void onPause() {
     super.onPause();
-
+    globalState.MessagesActivity_visible = false;
     //...
 
   }
@@ -122,22 +139,30 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
 
-      //...
-
-      //remove this sentence on completing the code:
-      return null;
+      return RPC.retrieveMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId());
     }
 
     @Override
     protected void onPostExecute(List<Message> all_messages) {
+      globalState.save_new_messages(all_messages);
       progressDialog.dismiss();
       if (all_messages == null) {
         toastShow("There's been an error downloading the messages");
       } else {
-        toastShow(all_messages.size()+" messages downloaded");
+        toastShow(all_messages.size() + " messages downloaded");
+        //... create adapter, pass messages to adapter, retrieve listview for layout pass adapter
+        adapter = new MyAdapter_messages(e_MessagesActivity_4_broadcast_and_persistence.this, all_messages, globalState.my_user);
+        conversation = (((ListView) findViewById(R.id.conversation)));
 
-        //...
+        conversation.setAdapter(adapter);
 
+        adapter.notifyDataSetChanged();
+        conversation.post(new Runnable() {
+          @Override
+          public void run() {
+            conversation.setSelection(conversation.getCount() - 1);
+          }
+        });
       }
     }
   }
@@ -147,10 +172,10 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
     @Override
     protected List<Message> doInBackground(Integer... userIds) {
 
-      //...
-
-      //remove this sentence on completing the code:
-      return null;
+      if(!adapter.isEmpty())
+        return RPC.retrieveNewMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId(),adapter.getLastMessage());
+      else
+        return RPC.retrieveMessages(globalState.user_to_talk_to.getId(),globalState.my_user.getId());
     }
 
     @Override
@@ -159,8 +184,16 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
         toastShow("There's been an error downloading new messages");
       } else {
         toastShow(new_messages.size()+" new message/s downloaded");
+        globalState.save_new_messages(new_messages);
+        adapter.addMessages(new_messages);
+        adapter.notifyDataSetChanged();
 
-        //...
+        conversation.post(new Runnable() {
+          @Override
+          public void run() {
+            conversation.setSelection(conversation.getCount() - 1);
+          }
+        });
 
       }
     }
@@ -168,7 +201,13 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
 
   public void sendText(final View view) {
 
-    //...
+    Message message = new Message();
+
+    message.setContent(((EditText)findViewById(R.id.input)).getText().toString());
+    message.setDate(new Date());
+    message.setUserSender(globalState.my_user);
+    message.setUserReceiver(globalState.user_to_talk_to);
+    new SendMessage_Task().execute(message);
 
     input_text.setText("");
 
@@ -186,10 +225,7 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
     @Override
     protected Boolean doInBackground(Message... messages) {
 
-      //...
-
-      //remove this sentence on completing the code:
-      return false;
+      return RPC.postMessage(messages[0]);
     }
 
     @Override
@@ -197,7 +233,7 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
       if (resultOk) {
         toastShow("message sent");
 
-        //...
+        new fetchNewMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
 
       } else {
         toastShow("There's been an error sending the message");

@@ -25,10 +25,10 @@ public class _GlobalState extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-//    if(isThere_my_user()){
-//      load_my_user();
-//      startService(new Intent(this, PushService.class));
-//    }
+    if(isThere_my_user()){
+      load_my_user();
+      startService(new Intent(this, PushService.class));
+    }
   }
 
   public void load_my_user(){
