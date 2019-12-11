@@ -61,6 +61,7 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
       Message mess = gson.fromJson(message, Message.class);
 
       globalState.user_to_talk_to = mess.getUserSender();
+      globalState.save_new_message(mess);
     }
 
     TextView title = (TextView) findViewById(R.id.title);
@@ -78,6 +79,7 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
         {
           adapter.addMessage(mess);
           adapter.notifyDataSetChanged();
+          globalState.save_new_message(mess);
 
           conversation.post(new Runnable() {
             @Override
@@ -97,7 +99,22 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
     registerReceiver(broadcastReceiver, intentFilter);
 
     if(globalState.isThere_messages()) {
-      globalState.load_messages();
+      //... create adapter, pass messages to adapter, retrieve listview for layout pass adapter
+      adapter = new MyAdapter_messages(e_MessagesActivity_4_broadcast_and_persistence.this, globalState.load_messages(), globalState.my_user);
+      conversation = (((ListView) findViewById(R.id.conversation)));
+
+      conversation.setAdapter(adapter);
+
+      adapter.notifyDataSetChanged();
+
+      conversation.post(new Runnable() {
+        @Override
+        public void run() {
+          conversation.setSelection(conversation.getCount() - 1);
+        }
+      });
+
+      new fetchNewMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
     }
     else{
       new fetchAllMessages_Task().execute(globalState.my_user.getId(), globalState.user_to_talk_to.getId());
