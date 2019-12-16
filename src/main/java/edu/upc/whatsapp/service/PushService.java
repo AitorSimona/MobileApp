@@ -254,6 +254,9 @@ public class PushService extends Service {
     notification.defaults |= Notification.DEFAULT_SOUND;
     
     NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+    globalState.last_notification = notification;
+    globalState.last_notification_message = json_msg;
     nm.notify(2, notification);
   }
 

@@ -1,6 +1,7 @@
 package edu.upc.whatsapp;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -62,6 +63,19 @@ public class e_MessagesActivity_4_broadcast_and_persistence extends Activity {
 
       globalState.user_to_talk_to = mess.getUserSender();
       globalState.save_new_message(mess);
+    }
+    else
+    {
+      if(globalState.last_notification != null)
+      {
+        Message mess = gson.fromJson(globalState.last_notification_message, Message.class);
+
+        if(mess.getUserSender().getId() == globalState.user_to_talk_to.getId())
+        {
+          NotificationManager nm = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+          nm.cancel(2);
+        }
+      }
     }
 
     TextView title = (TextView) findViewById(R.id.title);

@@ -1,6 +1,7 @@
 package edu.upc.whatsapp;
 
 import android.app.Application;
+import android.app.Notification;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ public class _GlobalState extends Application {
 
   public UserInfo my_user, user_to_talk_to;
   public boolean MessagesActivity_visible;
+  public Notification last_notification;
+  public String last_notification_message;
 
   @Override
   public void onCreate() {
